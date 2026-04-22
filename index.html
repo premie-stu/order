@@ -25,6 +25,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* แกัไขการล็อคความสูงของจอ */
         body {
             font-family: 'Prompt', sans-serif;
             background-color: #fce8eb; 
@@ -33,16 +34,19 @@
             color: var(--text-main);
             display: flex;
             justify-content: center;
-            min-height: 100vh;
+            height: 100vh; /* ล็อคความสูง */
+            height: 100dvh; /* ล็อคความสูงสำหรับมือถือรุ่นใหม่ */
+            overflow: hidden; /* ปิดการเลื่อนของหน้าจอหลัก */
         }
 
+        /* แก้ไขการล็อคความสูงของกรอบมือถือ */
         .app-container {
             width: 100%;
             max-width: 430px; 
             background-color: var(--bg-color); 
             background-image: radial-gradient(rgba(92, 58, 33, 0.15) 1.2px, transparent 1.2px);
             background-size: 24px 24px;
-            min-height: 100vh;
+            height: 100%; /* ให้พอดีกับ body */
             position: relative;
             box-shadow: 0 0 50px rgba(92, 58, 33, 0.15); 
             display: flex;
@@ -92,9 +96,9 @@
         /* === Main Content Area === */
         main {
             flex: 1;
-            overflow-y: auto;
+            overflow-y: auto; /* ส่วนนี้จะเลื่อนขึ้นลงได้อิสระ */
             padding: 24px 18px;
-            padding-bottom: 110px;
+            padding-bottom: 110px; /* เว้นที่ว่างให้เมนูด้านล่างไม่บังเนื้อหา */
         }
 
         .page {
@@ -356,7 +360,7 @@
     <div class="app-container">
         <header>
             <div class="header-side">
-                <img src="logo.png.PNG" alt="Logo" class="logo-img">
+                <img src="https://i.postimg.cc/5H1Bv1nd/IMG-3928.png" alt="Logo" class="logo-img">
             </div>
             <div class="header-title">WELCOME TO PREMIE STUDIO</div>
             <div class="header-right">
@@ -366,13 +370,10 @@
 
         <main id="main-content">
             
-            <!-- Page 1: Home -->
             <section id="page-home" class="page active">
                 
-                <!-- Redesigned Premium Portfolio Card with Banner Space -->
                 <a href="https://drive.google.com/drive/folders/1AP6_rSm5HJIqbyLXBSCgjvYctWqDGGYg" target="_blank" class="premium-portfolio-card">
                     <div class="banner-box">
-                        <!-- Inserted User Image in Banner -->
                         <img src="https://i.postimg.cc/bJCFqhWW/IMG-0730.jpg" alt="Banner" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="portfolio-label">
@@ -389,7 +390,6 @@
                     </div>
                 </a>
 
-                <!-- Important Links Section -->
                 <div style="margin-bottom: 24px;">
                     <div class="premium-heading">System<span>ระบบจัดการและคิวงาน</span></div>
                     
@@ -416,7 +416,6 @@
                     </a>
                 </div>
 
-                <!-- Contact Section -->
                 <div style="margin-bottom: 24px;">
                     <div class="premium-heading">Contact<span>ช่องทางการติดต่อ</span></div>
                     
@@ -447,7 +446,6 @@
                 <div class="copyright">&copy; 2026 Premie Studio. All Rights Reserved.</div>
             </section>
 
-            <!-- Page 2: Price (Untouched) -->
             <section id="page-price" class="page">
                 <div class="card">
                     <div class="premium-heading">Price List<span>รายละเอียดราคางาน</span></div>
@@ -524,12 +522,10 @@
                 <div class="copyright">&copy; 2026 Premie Studio. All Rights Reserved.</div>
             </section>
 
-            <!-- Page 3: Details -->
             <section id="page-details" class="page">
                 <div class="card">
                     <div class="premium-heading">Details<span>ข้อมูลเพิ่มเติม</span></div>
                     <div class="p-list">
-                        <!-- removed ระยะเวลาทำงาน item as requested -->
                         <div class="p-item">
                             <div class="p-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg></div>
                             <div style="flex:1;"><b>ไม่เร่งงาน</b><p style="font-size:14px; color:var(--text-muted); margin-top:4px;">หากลูกค้าไม่ได้จ่ายค่าเร่ง รบกวนไม่เร่งนะคะ</p></div>
@@ -566,7 +562,6 @@
                 <div class="copyright">&copy; 2026 Premie Studio. All Rights Reserved.</div>
             </section>
 
-            <!-- Page 4: Brief (Untouched) -->
             <section id="page-brief" class="page">
                 <div class="card">
                     <div class="premium-heading">How to Brief<span>วิธีบรีฟงาน</span></div>
@@ -584,7 +579,6 @@
                 <div class="copyright">&copy; 2026 Premie Studio. All Rights Reserved.</div>
             </section>
 
-            <!-- Page 5: Edit (Untouched) -->
             <section id="page-edit" class="page">
                 <div class="card">
                     <div class="premium-heading">Edit Details<span>รายละเอียดในการแก้ไขงาน</span></div>
@@ -614,7 +608,6 @@
             </section>
         </main>
 
-        <!-- Navigation Bar -->
         <nav class="bottom-nav">
             <div class="nav-item active" onclick="switchPage('page-home', this)">
                 <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
