@@ -1,0 +1,657 @@
+```html
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Premie Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        /* === Premium Style Constants === */
+        :root {
+            --bg-color: #fff0f3; 
+            --card-bg: #ffffff;
+            --text-main: #5c3a21; 
+            --text-muted: #9c7b6f; 
+            --accent-color: #f2a6b6; 
+            --border-color: #f2dbde; 
+            --shadow-premium: 0 15px 40px rgba(92, 58, 33, 0.1);
+            --border-radius: 24px; 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #fce8eb; 
+            background-image: radial-gradient(var(--text-main) 1.5px, transparent 1.5px);
+            background-size: 30px 30px;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 430px; 
+            background-color: var(--bg-color); 
+            background-image: radial-gradient(rgba(92, 58, 33, 0.15) 1.2px, transparent 1.2px);
+            background-size: 24px 24px;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 50px rgba(92, 58, 33, 0.15); 
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* === Header === */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px; 
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 20px rgba(92, 58, 33, 0.05); 
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-img {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 4px 10px rgba(242, 166, 182, 0.4);
+            flex-shrink: 0;
+        }
+
+        .header-title {
+            flex: 1;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            font-style: italic;
+            color: #8a6454; 
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .header-right {
+            width: 44px;
+            display: flex;
+            justify-content: flex-end;
+            color: #d17589;
+        }
+
+        /* === Main Content Area === */
+        main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 18px;
+            padding-bottom: 110px;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === Components === */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 24px; 
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-premium);
+            border: 1px solid rgba(92, 58, 33, 0.03);
+        }
+
+        /* Home Page Specific Design for Banner & Portfolio */
+        #page-home .premium-portfolio-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 45px rgba(242, 166, 182, 0.2);
+            border: 1px solid rgba(242, 166, 182, 0.3);
+            text-decoration: none;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        #page-home .premium-portfolio-card:active { transform: scale(0.98); }
+
+        #page-home .banner-box {
+            background: linear-gradient(135deg, #fff0f3 0%, #ffe4e9 100%);
+            width: 100%;
+            aspect-ratio: 1920 / 1080; 
+            height: auto;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(242, 166, 182, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        #page-home .banner-box::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(#f2a6b6 1px, transparent 1px);
+            background-size: 15px 15px;
+            opacity: 0.2;
+        }
+        #page-home .portfolio-label {
+            margin-top: 15px;
+            padding: 0 8px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #page-home .portfolio-title {
+            color: var(--text-main);
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #page-home .portfolio-subtitle {
+            color: var(--text-muted);
+            font-size: 12px;
+            font-style: italic;
+        }
+        #page-home .portfolio-arrow {
+            width: 32px;
+            height: 32px;
+            background: var(--text-main);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 4px 10px rgba(92, 58, 33, 0.2);
+        }
+
+        .premium-heading {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 12px;
+            line-height: 1.3;
+        }
+        .premium-heading span {
+            display: block; font-size: 12px; font-weight: 400; color: var(--text-muted); margin-top: 3px;
+        }
+
+        .link-minimal {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid rgba(92, 58, 33, 0.06);
+            border-radius: 18px;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+            text-decoration: none;
+            color: var(--text-main);
+            box-shadow: 0 8px 20px rgba(92, 58, 33, 0.04);
+            transition: all 0.2s ease;
+        }
+        .link-minimal:active { transform: scale(0.97); background-color: #fffafb; }
+        .link-icon-box {
+            width: 44px; height: 44px; background: #fff0f3;
+            border-radius: 14px; display: flex; justify-content: center; align-items: center; 
+            margin-right: 14px; color: #e0899c; border: 1px solid #f2dbde;
+            flex-shrink: 0;
+        }
+        .link-text { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+        }
+        .link-text b { 
+            display: block; 
+            font-size: 14.5px; 
+            margin-bottom: 2px; 
+            line-height: 1.2;
+        }
+        .link-text small { 
+            color: var(--text-muted); 
+            font-size: 11.5px; 
+            font-style: italic; 
+            display: block;
+            line-height: 1.2;
+        }
+
+        /* Lists - Modified align-items for centering text vertically */
+        .p-list { display: flex; flex-direction: column; gap: 20px; }
+        .p-item { display: flex; align-items: center; padding-bottom: 20px; border-bottom: 1px dashed var(--border-color); }
+        .p-item:last-child { border-bottom: none; padding-bottom: 0; }
+        
+        .p-icon {
+            width: 32px; height: 32px; background: #fff0f3; border-radius: 10px;
+            display: flex; justify-content: center; align-items: center; margin-right: 14px; 
+            color: #e0899c; box-shadow: 0 4px 10px rgba(242, 166, 182, 0.2);
+            flex-shrink: 0;
+        }
+        /* Step numbers in Brief */
+        .p-num {
+            padding: 6px 16px; background: linear-gradient(135deg, #f5bccc, #f2a6b6); color: white;
+            border-radius: 18px; font-size: 13.5px; font-weight: 600; margin-right: 14px;
+            box-shadow: 0 6px 15px rgba(242, 166, 182, 0.4); flex-shrink: 0;
+            letter-spacing: 0.2px;
+        }
+        /* Bundle labels in Price - Clean Minimal Style (Centered) */
+        .p-num-clean {
+            font-size: 18px; font-weight: 600; color: var(--text-main); flex-shrink: 0;
+            min-width: 85px; text-align: center;
+        }
+
+        .price-tag {
+            background: linear-gradient(135deg, #f5bccc, #e0899c); color: white; 
+            padding: 6px 14px; border-radius: 12px; font-weight: 600; font-size: 13.5px; 
+            box-shadow: 0 6px 15px rgba(242, 166, 182, 0.4); white-space: nowrap;
+            display: inline-block; margin-top: 10px;
+        }
+
+        /* === Premium Check Box Design === */
+        .check-box-premium {
+            background: linear-gradient(135deg, #fff0f3 0%, #ffffff 100%);
+            border: 1px solid #f2dbde;
+            border-left: 5px solid var(--accent-color);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: left;
+            box-shadow: 0 12px 30px rgba(242, 166, 182, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .check-box-premium::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(242, 166, 182, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .check-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .check-content {
+            font-size: 13.5px;
+            color: #8a6454;
+            line-height: 1.7;
+        }
+        
+        /* Suggestion Box */
+        .suggestion-box {
+            background-color: #fffafb; border: 1px solid rgba(92, 58, 33, 0.05); border-radius: 24px;
+            padding: 30px 16px; text-align: center; box-shadow: 0 16px 35px rgba(92, 58, 33, 0.06);
+            position: relative; overflow: hidden; margin-bottom: 24px;
+        }
+        .suggestion-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(to right, #f5bccc, #f2a6b6); }
+        
+        .suggestion-heart {
+            width: 60px; height: 60px; fill: #f2a6b6; margin-bottom: 16px;
+            filter: drop-shadow(0 6px 12px rgba(242, 166, 182, 0.35));
+        }
+        .suggestion-box p.sub-note {
+            font-size: 10.5px; color: #b3958a; font-style: italic; white-space: nowrap; 
+            overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.1px; margin-top: 10px;
+            display: block; width: 100%;
+        }
+
+        .copyright { text-align: center; font-size: 10.5px; color: #b3958a; margin-top: 10px; margin-bottom: 24px; opacity: 0.8; }
+
+        /* === Navigation === */
+        .bottom-nav {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
+            display: flex; justify-content: space-around; padding: 10px 5px 25px;
+            box-shadow: 0 -8px 30px rgba(92, 58, 33, 0.1); z-index: 100;
+        }
+        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 10.5px; cursor: pointer; text-align: center; }
+        .nav-item.active { color: var(--text-main); font-weight: 600; }
+        .nav-item svg { width: 22px; height: 22px; margin-bottom: 4px; fill: currentColor; }
+
+        /* Centered Nav Item Positioning */
+        .nav-center { position: relative; overflow: visible; }
+        .nav-center-btn {
+            position: absolute; top: -45px; left: 50%; transform: translateX(-50%);
+            width: 54px; height: 54px; background: linear-gradient(to bottom, #f5bccc, #f2a6b6);
+            border-radius: 50%; border: 4px solid #ffffff; box-shadow: 0 8px 20px rgba(242, 166, 182, 0.5);
+            display: flex; justify-content: center; align-items: center; color: white;
+        }
+        .nav-center-text { margin-top: 12px; } 
+        .nav-item.active .nav-center-btn { background: #5c3a21; box-shadow: 0 8px 20px rgba(92, 58, 33, 0.4); }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <div class="header-side">
+                <img src="https://i.postimg.cc/5H1Bv1nd/IMG-3928.png" alt="Logo" class="logo-img">
+            </div>
+            <div class="header-title">WELCOME TO PREMIE STUDIO</div>
+            <div class="header-right">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            </div>
+        </header>
+
+        <main id="main-content">
+            
+            <!-- Page 1: Home -->
+            <section id="page-home" class="page active">
+                
+                <!-- Redesigned Premium Portfolio Card with Banner Space -->
+                <a href="https://drive.google.com/drive/folders/1AP6_rSm5HJIqbyLXBSCgjvYctWqDGGYg" target="_blank" class="premium-portfolio-card">
+                    <div class="banner-box">
+                        <!-- Inserted User Image in Banner -->
+                        <img src="https://i.postimg.cc/bJCFqhWW/IMG-0730.jpg" alt="Banner" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="portfolio-label">
+                        <div>
+                            <div class="portfolio-title">
+                                EXAMPLE 
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="#f2a6b6"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            </div>
+                            <div class="portfolio-subtitle">รวมรวบผลงานการออกแบบทั้งหมด</div>
+                        </div>
+                        <div class="portfolio-arrow">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Important Links Section -->
+                <div style="margin-bottom: 24px;">
+                    <div class="premium-heading">System<span>ระบบจัดการและคิวงาน</span></div>
+                    
+                    <a href="https://docs.google.com/spreadsheets/d/1ySYRUkh914NTAp8HPpnlNtqqWwXJXiuumb0EEYe7jSs/edit?usp=drivesdk" target="_blank" class="link-minimal">
+                        <div class="link-icon-box">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                        </div>
+                        <div class="link-text">
+                            <b>Check Queue</b>
+                            <small>เช็คคิวงานคลิกที่นี่</small>
+                        </div>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#d17589" style="opacity: 0.6;"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/19WsHOL0pyfSNaTbnh3NEbKubsZxgV9As" target="_blank" class="link-minimal">
+                        <div class="link-icon-box">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </div>
+                        <div class="link-text">
+                            <b>Select Toon</b>
+                            <small>เลือกตูนสำหรับแต่งป้าย</small>
+                        </div>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#d17589" style="opacity: 0.6;"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                    </a>
+                </div>
+
+                <!-- Contact Section -->
+                <div style="margin-bottom: 24px;">
+                    <div class="premium-heading">Contact<span>ช่องทางการติดต่อ</span></div>
+                    
+                    <a href="https://www.facebook.com/nongpremkrub?" target="_blank" class="link-minimal">
+                        <div class="link-icon-box" style="background: #e7f3ff; color: #1877f2; border-color: #d1e8ff;">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </div>
+                        <div class="link-text">
+                            <b>Facebook Contact</b>
+                            <small>nongpremkrub</small>
+                        </div>
+                    </a>
+
+                    <a href="https://lin.ee/TspksPn" target="_blank" class="link-minimal">
+                        <div class="link-icon-box" style="background: #e8f7ed; color: #00b900; border-color: #d2f0dc;">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                                <path d="M23.35,10.11c0-4.64-5.09-8.41-11.35-8.41S0.65,5.47,0.65,10.11c0,4.16,4.04,7.63,9.5,8.32,0.37,0.08,0.87,0.24,1,0.56,0.12,0.29,0.07,0.73,0.04,1l-.16,1c-.05,0.29-.23,1.13,0.98,0.61,1.22-.51,6.58-3.87,8.98-6.63C22.69,13.06,23.35,11.64,23.35,10.11Z"/>
+                                <text x="12" y="11.5" text-anchor="middle" fill="white" style="font-family: Arial, sans-serif; font-size: 4px; font-weight: 900; letter-spacing: -0.2px;">LINE</text>
+                            </svg>
+                        </div>
+                        <div class="link-text">
+                            <b>LINE Contact</b>
+                            <small>@615cfhed</small>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="copyright">&copy; 2026 Premie Studio. All Rights Reserved.</div>
+            </section>
+
+            <!-- Page 2: Price (Untouched) -->
+            <section id="page-price" class="page">
+                <div class="card">
+                    <div class="premium-heading">Price List<span>รายละเอียดราคางาน</span></div>
+                    <div class="p-list">
+                        <div class="p-item">
+                            <div class="p-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg></div>
+                            <div style="flex:1;"><b>ป้ายบัญชี และอื่นๆ</b></div>
+                            <div class="price-tag">เริ่ม 119.-</div>
+                        </div>
+                        <div class="p-item">
+                            <div class="p-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg></div>
+                            <div style="flex:1;"><b>ป้ายรายละเอียด</b></div>
+                            <div class="price-tag">เริ่ม 119.-</div>
+                        </div>
+                        <div class="p-item">
+                            <div class="p-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M7 2v1h10V2h2v1h.5c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h.5V2h2zm12 5H5v12h14V7z"/></svg></div>
+                            <div style="flex:1;"><b>ป้ายเรท</b></div>
+                            <div class="price-tag">เริ่ม 129.-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, #ffffff 0%, #fffcfd 100%);">
+                    <div class="premium-heading">Bundle Deals<span>รายละเอียดราคาเหมา</span></div>
+                    <div class="p-list">
+                        <div class="p-item" style="border-bottom: 1px solid #f9ecee;">
+                            <div class="p-num-clean">3 ป้าย</div>
+                            <div style="flex:1;"></div>
+                            <div class="price-tag">329.-</div>
+                        </div>
+                        <div class="p-item" style="border-bottom: 1px solid #f9ecee;">
+                            <div class="p-num-clean">5 ป้าย</div>
+                            <div style="flex:1;"></div>
+                            <div class="price-tag">529.-</div>
+                        </div>
+                        <div class="p-item">
+                            <div class="p-num-clean" style="color: #5c3a21;">10 ป้าย</div>
+                            <div style="flex:1;"></div>
+                            <div class="price-tag">999.-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="premium-heading">Express Rates<span>เรทราคาเร่งงาน</span></div>
+                    <div class="p-list">
+                        <div class="p-item">
+                            <div class="p-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm3.3 14.71L11 12.41V7h2v4.59l3.71 3.71-1.42 1.41z"/></svg></div>
+                            <div style="flex:1;">
+                                <b>Mini Speed +30</b>
+                                <p style="font-size:13.5px; color:var(--text-muted); margin-top:2px;">ได้รับงานภายใน 1 - 2 วัน</p>
+                            </div>
+                        </div>
+                        <div class="p-item">
+                            <div class="p-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm3.3 14.71L11 12.41V7h2v4.59l3.71 3.71-1.42 1.41z"/></svg></div>
+                            <div style="flex:1;">
+                                <b>Fast Speed +60</b>
+                                <p style="font-size:13.5px; color:var(--text-muted); margin-top:2px;">ได้รับงานภายใน 12 - 18 ชั่วโมง</p>
+                            </div>
+                        </div>
+                        <div class="p-item">
+                            <div class="p-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm3.3 14.71L11 12.41V7h2v4.59l3.71 3.71-1.42 1.41z"/></svg></div>
+                            <div style="flex:1;">
+                                <b>Super Speed x2 ของราคางาน</b>
+                                <p style="font-size:13.5px; color:var(--text-muted); margin-top:2px;">ได้รับงานภายใน 3 - 5 ชั่วโมง</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="check-box-premium" style="margin-top: 10px;">
+                    <p style="font-size:13.5px; text-align:center; color: #8a6454;">ราคาอาจมีการเปลี่ยนแปลงขึ้นอยู่กับความยาก - ง่ายของงาน สามารถทักมาประเมินราคาก่อนได้ค่ะ</p>
+                </div>
+                <div class="copyright">&copy; 2026 Premie Studio. All Rights Reserved.</div>
+            </section>
+
+            <!-- Page 3: Details -->
+            <section id="page-details" class="page">
+                <div class="card">
+                    <div class="premium-heading">Details<span>ข้อมูลเพิ่มเติม</span></div>
+                    <div class="p-list">
+                        <!-- removed ระยะเวลาทำงาน item as requested -->
+                        <div class="p-item">
+                            <div class="p-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg></div>
+                            <div style="flex:1;"><b>ไม่เร่งงาน</b><p style="font-size:14px; color:var(--text-muted); margin-top:4px;">หากลูกค้าไม่ได้จ่ายค่าเร่ง รบกวนไม่เร่งนะคะ</p></div>
+                        </div>
+                        <div class="p-item">
+                            <div class="p-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M11 17l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg></div>
+                            <div style="flex:1;"><b>การแก้ไขงาน</b><p style="font-size:14px; color:var(--text-muted); margin-top:4px;">หากเกิน 6 เดือนจะไม่สามารถแก้ไขได้แล้ว เนื่องจากทางร้านลบไฟล์งานทุกๆ 6 เดือนค่ะ</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, #fffcfd 0%, #ffffff 100%);">
+                    <div class="premium-heading">Terms<span>ข้อควรทราบก่อนสั่งงาน</span></div>
+                    <div class="p-list">
+                        <div class="p-item" style="border-bottom: 1px dashed #f2dbde; padding-bottom: 15px;">
+                            <div class="p-icon" style="background: #fff0f3;"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2L1 21h22L12 2zm0 3.45L19.53 19H4.47L12 5.45zM11 16h2v2h-2v-2zm0-7h2v5h-2V9z"/></svg></div>
+                            <div style="font-size:14px; line-height:1.6;">ทางร้านไม่รับงาน ที่มีการลอกเลียนแบบผลงานผู้อื่น</div>
+                        </div>
+                        <div class="p-item" style="border-bottom: 1px dashed #f2dbde; padding-bottom: 15px;">
+                            <div class="p-icon" style="background: #fff0f3;"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/></svg></div>
+                            <div style="font-size:14px; line-height:1.6;">ทางร้านไม่รับงานสีรุ้งสดใส เนื่องจากทางร้านยังไม่มั่นใจว่าจะทำออกมาได้ดีรึเปล่าค่ะ</div>
+                        </div>
+                        <div class="p-item" style="border-bottom: 1px dashed #f2dbde; padding-bottom: 15px;">
+                            <div class="p-icon" style="background: #fff0f3;"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8-1.41-1.42z"/></svg></div>
+                            <div style="font-size:14px; line-height:1.6;">ทางร้านไม่รับงานที่ตูนกับสีป้ายคนละสี เช่น ตูนม่วง แต่โทนแดง</div>
+                        </div>
+                        <div class="p-item">
+                            <div class="p-icon" style="background: #fce8eb; color: #d17589;"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div>
+                            <div style="font-size:14px; line-height:1.6; color: #d17589; font-weight: 500;">หากลูกค้าโอนเงินมาแล้ว ขอยกเลิกงาน <b style="text-decoration: underline;">“ไม่มีการคืนเงิน”</b> ใดๆทั้งสิ้น</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="copyright">&copy; 2026 Premie Studio. All Rights Reserved.</div>
+            </section>
+
+            <!-- Page 4: Brief (Untouched) -->
+            <section id="page-brief" class="page">
+                <div class="card">
+                    <div class="premium-heading">How to Brief<span>วิธีบรีฟงาน</span></div>
+                    <div class="p-list">
+                        <div class="p-item" style="border:none; padding:0;"><div class="p-num">Step 1</div><div style="font-size:14.5px;">ดูตัวอย่างงานที่ต้องการ แจ้งประเภทป้าย และจำนวนป้าย</div></div>
+                        <div class="p-item" style="border:none; padding:0;"><div class="p-num">Step 2</div><div style="font-size:14.5px;">บรีฟรายละเอียดที่จะใส่ในป้าย</div></div>
+                        <div class="p-item" style="border:none; padding:0;"><div class="p-num">Step 3</div><div style="font-size:14.5px;">เลือกตูน และแจ้งโทนสีป้าย <span style="font-size:12px; display:block; color:var(--text-muted); margin-top:2px;">(หากต้องการให้คุมโทน สามารถส่งรูปภาพมาได้ค่ะ)</span></div></div>
+                        <div class="p-item" style="border:none; padding:0;"><div class="p-num">Step 4</div><div style="font-size:14.5px;">บรีฟแบบหัวป้าย ที่ต้องการดูได้ที่ตัวอย่างสามารถแคปมาได้เลย <span style="font-size:12px; display:block; color:var(--text-muted); margin-top:2px;">(หากไม่บรีฟทางร้านจะทำให้ตามความเหมาะสม)</span></div></div>
+                    </div>
+                </div>
+                <div class="check-box-premium">
+                    <div class="check-title"><svg viewBox="0 0 24 24" width="22" height="22" fill="#f2a6b6"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg><span>Check Brief เช็คบรีฟ</span></div>
+                    <div class="check-content">ตรวจสอบความถูกต้องของข้อมูลก่อนส่งให้ทางร้าน เช่น รายละเอียดต่างๆ หัวป้าย เป็นต้น ทางร้านจะทำตามที่ลูกค้าส่งมา ส่งมาแบบไหนทำแบบนั้นค่ะ โปรดตรวจสอบให้ดี</div>
+                </div>
+                <div class="copyright">&copy; 2026 Premie Studio. All Rights Reserved.</div>
+            </section>
+
+            <!-- Page 5: Edit (Untouched) -->
+            <section id="page-edit" class="page">
+                <div class="card">
+                    <div class="premium-heading">Edit Details<span>รายละเอียดในการแก้ไขงาน</span></div>
+                    <div class="p-list">
+                        <div class="p-item">
+                            <div class="p-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+                            <div style="flex:1;"><b style="font-size: 15px;">แก้ไขฟรี 2 ครั้ง</b><p style="font-size:13.5px; color:var(--text-muted); margin-top:4px;">เฉพาะจุดเล็กน้อยที่ไม่กระทบต่อโครงสร้างหลักของงาน ปรับสีสว่าง - เข้มเล็กน้อย / ขยับตำแหน่งซ้าย ขวา บน ล่างเล็กน้อย</p></div>
+                        </div>
+                        <div class="p-item">
+                            <div class="p-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg></div>
+                            <div style="flex:1;"><b style="font-size: 15px;">การแก้ไขงาน ที่มีค่าแก้</b><p style="font-size:13.5px; color:var(--text-muted); margin-top:4px;">แก้คำผิดที่มาจากลูกค้า / เพิ่ม หรือลบข้อความ / เปลี่ยนตูน / เปลี่ยนโทนสี / เปลี่ยนฟอนต์ / เปลี่ยนของตกแต่ง และอื่นๆ</p><div class="price-tag">มีค่าแก้จุดละ 10 - 50.- ขึ้นไป</div><p style="font-size:12.5px; color:var(--text-muted); margin-top:6px;">(ค่าแก้ตามความยาก - ง่าย ของจุดที่ลูกค้าต้องการแก้)</p><p style="font-size:12.5px; color:#d17589; margin-top:4px; font-weight: 500;">* ในส่วนที่แก้ไขได้ยากค่าแก้อาจสูง เช่น หัวป้าย โทนสี</p></div>
+                        </div>
+                        <div class="p-item">
+                            <div class="p-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg></div>
+                            <div style="flex:1;"><b style="font-size: 13.2px; white-space: nowrap; display: block; letter-spacing: -0.4px;">กรณี “ตามใจแม่ค้า” หรือ “บรีฟไม่ชัดเจน” แล้วขอแก้</b><p style="font-size:13.5px; color:var(--text-muted); margin-top:4px;">มีค่าแก้เล็กน้อยตามความเหมาะสม เช่น เปลี่ยนโทนสี เปลี่ยนตูน ของตกแต่งหลักในงาน</p></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="suggestion-box">
+                    <svg viewBox="0 0 24 24" class="suggestion-heart"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    <p style="font-size:15px; color:#8a6454; font-weight: 500;">หากลูกค้ามีแบบที่ลูกค้าชอบ สามารถแนบมาให้ทางร้านได้เลยนะคะ ลูกค้าจะได้งานที่ตรงใจจะได้ happy ทั้งสองฝ่าย</p>
+                    <p class="sub-note">(ผลงานที่แนบต้องเป็นของทางร้านเท่านั้น รบกวนไม่แปะผลงานของคนอื่นนะคะ)</p>
+                </div>
+
+                <div class="copyright">&copy; 2026 Premie Studio. All Rights Reserved.</div>
+            </section>
+        </main>
+
+        <!-- Navigation Bar -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" onclick="switchPage('page-home', this)">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span>Home</span>
+            </div>
+            <div class="nav-item" onclick="switchPage('page-price', this)">
+                <svg viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+                <span>Price</span>
+            </div>
+            <div class="nav-item nav-center" onclick="switchPage('page-details', this)">
+                <div class="nav-center-btn">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                </div>
+                <span class="nav-center-text">Details</span>
+            </div>
+            <div class="nav-item" onclick="switchPage('page-brief', this)">
+                <svg viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                <span>Brief</span>
+            </div>
+            <div class="nav-item" onclick="switchPage('page-edit', this)">
+                <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                <span>Edit</span>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        function switchPage(pageId, navElement) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            navElement.classList.add('active');
+            document.getElementById('main-content').scrollTop = 0;
+        }
+    </script>
+</body>
+</html>
+
+```
